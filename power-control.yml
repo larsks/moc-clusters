@@ -8,7 +8,7 @@
         ipmitool
         -I lanplus
         -H {{ ipmi_host }}
-        -U {{ ipmi_user }}
+        -U {{ ipmi_username }}
         -P {{ ipmi_password }}
         power {{ power_action }}
       register: power

@@ -1,6 +1,8 @@
 all:
   children:
     zero_cluster:
+      vars:
+        aws_secret_prefix: cluster/zero
       children:
         zero_provisioner:
           vars:

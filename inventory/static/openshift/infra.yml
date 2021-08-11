@@ -1,6 +1,8 @@
 all:
   children:
     infra_cluster:
+      vars:
+        aws_secret_prefix: cluster/infra
       children:
         infra_openshift:
           vars:

@@ -1,6 +1,8 @@
 all:
   children:
-    kaizen_openstack:
+    kaizen_cluster:
+      vars:
+        aws_secret_prefix: cluster/kaizen
       children:
         kzn_undercloud:
           hosts:

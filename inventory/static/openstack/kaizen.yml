@@ -1,0 +1,152 @@
+all:
+  children:
+    kaizen_openstack:
+      children:
+        kzn_undercloud:
+          hosts:
+            kzn-undercloud.kzn.moc:
+          vars:
+            moc_role: openstack_undercloud
+            ansible_user: root
+        kzn_overcloud:
+          children:
+            kzn_controller:
+              hosts:
+                neu-3-39-control3.kzn.moc:
+                  ipmi_host: 10.0.3.39
+                  ooo_name: overcloud-controller-2
+                neu-5-39-control2.kzn.moc:
+                  ipmi_host: 10.0.5.39
+                  ooo_name: overcloud-controller-1
+                neu-15-39-control1.kzn.moc:
+                  ipmi_host: 10.0.15.39
+                  ooo_name: overcloud-controller-0
+              vars:
+                ansible_user: root
+                ctlplane_interface: p3p1
+                ipmi_group: dell
+                moc_role: openstack_controller
+            kzn_networker:
+              hosts:
+                neu-19-11-nc1.kzn.moc:
+                  ipmi_host: 10.0.19.11
+                  ooo_name: overcloud-networker-0
+                neu-17-11-nc2.kzn.moc:
+                  ipmi_host: 10.0.17.11
+                  ooo_name: overcloud-networker-1
+              vars:
+                ansible_user: root
+                ctlplane_interface: p3p1
+                ipmi_group: dell
+                moc_role: openstack_networker
+            kzn_compute:
+              children:
+                kzn_gpucompute:
+                  hosts:
+                    neu-15-12-gcomp.kzn.moc:
+                      ipmi_host: 10.0.15.12
+                      ooo_name: overcloud-compute-15
+                    neu-17-12-gcomp.kzn.moc:
+                      disabled: true
+                      ipmi_host: 10.0.17.12
+                      ooo_name: overcloud-compute-26
+                    neu-19-12-gcomp.kzn.moc:
+                      ipmi_host: 10.0.19.12
+                      ooo_name: overcloud-compute-27
+                  vars:
+                    ctlplane_interface: p6p1
+                kzn_fpgacompute:
+                  hosts:
+                    neu-17-8-fpga.kzn.moc:
+                      disabled: true
+                      ipmi_host: 10.0.17.8
+                      ooo_name: overcloud-compute-28
+                    neu-19-8-fpga.kzn.moc:
+                      disabled: true
+                      ipmi_host: 10.0.19.8
+                      ooo_name: overcloud-compute-29
+                  vars:
+                    ctlplane_interface: ens803f0
+                    ipmi_group: ibm
+              hosts:
+                neu-3-34-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.3.34
+                  ooo_name: overcloud-compute-0
+                neu-3-35-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.3.35
+                  ooo_name: overcloud-compute-1
+                neu-3-36-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.3.36
+                  ooo_name: overcloud-compute-2
+                neu-3-37-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.3.37
+                  ooo_name: overcloud-compute-3
+                neu-3-38-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.3.38
+                  ooo_name: overcloud-compute-4
+                neu-5-34-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.5.34
+                  ooo_name: overcloud-compute-5
+                neu-5-35-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.5.35
+                  ooo_name: overcloud-compute-6
+                neu-5-36-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.5.36
+                  ooo_name: overcloud-compute-7
+                neu-5-37-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.5.37
+                  ooo_name: overcloud-compute-8
+                neu-5-38-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.5.38
+                  ooo_name: overcloud-compute-9
+                neu-15-34-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.15.34
+                  ooo_name: overcloud-compute-10
+                neu-15-35-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.15.35
+                  ooo_name: overcloud-compute-11
+                neu-15-36-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.15.36
+                  ooo_name: overcloud-compute-12
+                neu-15-37-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.15.37
+                  ooo_name: overcloud-compute-13
+                neu-15-38-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.15.38
+                  ooo_name: overcloud-compute-14
+                neu-17-1-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.17.1
+                  ooo_name: overcloud-compute-16
+                neu-17-2-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.17.2
+                  ooo_name: overcloud-compute-17
+                neu-17-3-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.17.3
+                  ooo_name: overcloud-compute-18
+                neu-17-4-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.17.4
+                  ooo_name: overcloud-compute-19
+                neu-17-5-stackcomp.kzn.moc:
+                  disabled: true
+                  ipmi_host: 10.0.17.5
+                  ooo_name: overcloud-compute-20
+                neu-19-1-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.19.1
+                  ooo_name: overcloud-compute-21
+                neu-19-2-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.19.2
+                  ooo_name: overcloud-compute-22
+                neu-19-3-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.19.3
+                  ooo_name: overcloud-compute-23
+                neu-19-4-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.19.4
+                  ooo_name: overcloud-compute-24
+                neu-19-5-stackcomp.kzn.moc:
+                  ipmi_host: 10.0.19.5
+                  ooo_name: overcloud-compute-25
+              vars:
+                ansible_user: root
+                ctlplane_interface: p3p1
+                ipmi_group: dell
+                moc_role: openstack_compute

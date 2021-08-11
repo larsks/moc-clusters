@@ -1,0 +1,4 @@
+all:
+  hosts:
+    ipmi_proxy:
+      ansible_host: kzn-ipmi-gw

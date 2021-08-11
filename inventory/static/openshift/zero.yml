@@ -1,0 +1,87 @@
+all:
+  children:
+    zero_cluster:
+      children:
+        zero_provisioner:
+          vars:
+            ansible_user: root
+            manage_dns: true
+            moc_role: openshift_provisioner
+          hosts:
+            provisioner.zero.massopen.cloud:
+              hil_node: neu-17-25
+              ipmi_host: "10.0.17.25"
+              baremetal_ip: "192.12.185.103/24"
+              baremetal_mac: "90:e2:ba:82:35:c8"
+        zero_openshift:
+          vars:
+            ansible_python_interpreter: /usr/libexec/platform-python
+            ansible_user: core
+          children:
+            zero_controller:
+              vars:
+                moc_role: openshift_controller
+              hosts:
+                os-ctrl-0.zero.massopen.cloud:
+                  hil_node: neu-17-34
+                  ipmi_host: "10.0.17.34"
+                  baremetal_ip: "192.12.185.110/24"
+                  provisioning_mac: "00:0f:53:0d:7b:84"
+                  baremetal_mac: "00:0f:53:0d:7b:85"
+                os-ctrl-1.zero.massopen.cloud:
+                  hil_node: neu-3-13
+                  ipmi_host: "10.0.3.13"
+                  baremetal_ip: "192.12.185.111/24"
+                  provisioning_mac: "00:0f:53:0c:46:a0"
+                  baremetal_mac: "00:0f:53:0c:46:a1"
+                os-ctrl-2.zero.massopen.cloud:
+                  hil_node: neu-5-12
+                  ipmi_host: "10.0.5.12"
+                  baremetal_ip: "192.12.185.112/24"
+                  provisioning_mac: "00:0f:53:0d:b3:1c"
+                  baremetal_mac: "00:0f:53:0d:b3:1d"
+            zero_compute:
+              vars:
+                moc_role: openshift_compute
+              hosts:
+                os-wrk-0.zero.massopen.cloud:
+                  hil_node: neu-15-11
+                  ipmi_host: "10.0.15.11"
+                  baremetal_ip: "192.12.185.115/24"
+                  provisioning_mac: "90:e2:ba:ad:94:7c"
+                  baremetal_mac: "90:e2:ba:ad:94:7d"
+                os-wrk-1.zero.massopen.cloud:
+                  hil_node: neu-3-12
+                  ipmi_host: "10.0.3.12"
+                  baremetal_ip: "192.12.185.116/24"
+                  provisioning_mac: "00:0f:53:0d:b3:40"
+                  baremetal_mac: "00:0f:53:0d:b3:41"
+                os-wrk-2.zero.massopen.cloud:
+                  hil_node: neu-17-35
+                  ipmi_host: "10.0.17.35"
+                  baremetal_ip: "192.12.185.117/24"
+                  provisioning_mac: "00:0f:53:0c:45:78"
+                  baremetal_mac: "00:0f:53:0c:45:79"
+              children:
+                storage:
+                  vars:
+                    skip_install: true
+                  hosts:
+                    os-sto-0.zero.massopen.cloud:
+                      hil_node: neu-3-10
+                      ipmi_host: "10.0.3.10"
+                      baremetal_ip: "192.12.185.130"
+                      provisioning_mac: "90:e2:ba:ad:8c:c0"
+                      baremetal_mac: "90:e2:ba:ad:8c:c1"
+                    os-sto-1.zero.massopen.cloud:
+                      hil_node: neu-19-34
+                      ipmi_host: "10.0.19.34"
+                      baremetal_ip: "192.12.185.131"
+                      provisioning_mac: "90:b1:1c:3a:15:7d"
+                      baremetal_mac: "90:b1:1c:3a:15:7f"
+                    os-sto-2.zero.massopen.cloud:
+                      hil_node: neu-19-38
+                      ipmi_host: "10.0.19.38"
+                      baremetal_ip: "192.12.185.132"
+                      provisioning_mac: "d4:ae:52:9a:b7:80"
+                      baremetal_mac: "d4:ae:52:9a:b7:82"

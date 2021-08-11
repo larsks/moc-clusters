@@ -1,0 +1,8 @@
+plugin: constructed
+strict: false
+groups:
+  ipmi_hosts: ipmi_host|default(false)
+keyed_groups:
+  - prefix: ""
+    separator: ""
+    key: moc_role

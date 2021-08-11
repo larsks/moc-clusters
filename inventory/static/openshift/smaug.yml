@@ -1,0 +1,87 @@
+all:
+  children:
+    smaug_cluster:
+      children:
+        smaug_openshift:
+          vars:
+            ansible_user: core
+            ansible_python_interpreter: /usr/libexec/platform-python
+          children:
+            smaug_controller:
+              vars:
+                moc_role: openshift_controller
+              hosts:
+                oct-10-04-control:
+                  ipmi_host: "10.3.10.4"
+                oct-10-05-control:
+                  ipmi_host: "10.3.10.5"
+                oct-10-06-control:
+                  ipmi_host: "10.3.10.6"
+            smaug_compute:
+              vars:
+                moc_role: openshift_compute
+              hosts:
+                oct-03-00-compute:
+                  ipmi_host: "10.3.3.0"
+                oct-03-01-compute:
+                  ipmi_host: "10.3.3.1"
+                oct-03-02-compute:
+                  ipmi_host: "10.3.3.2"
+                oct-03-03-compute:
+                  ipmi_host: "10.3.3.3"
+                oct-03-04-compute:
+                  ipmi_host: "10.3.3.4"
+                oct-03-05-compute:
+                  ipmi_host: "10.3.3.5"
+                oct-03-06-compute:
+                  ipmi_host: "10.3.3.6"
+                oct-03-07-compute:
+                  ipmi_host: "10.3.3.7"
+                oct-03-08-compute:
+                  ipmi_host: "10.3.3.8"
+                oct-03-09-compute:
+                  ipmi_host: "10.3.3.9"
+                oct-03-10-compute:
+                  ipmi_host: "10.3.3.10"
+                oct-03-11-compute:
+                  ipmi_host: "10.3.3.11"
+                oct-03-12-compute:
+                  ipmi_host: "10.3.3.12"
+                oct-03-13-compute:
+                  ipmi_host: "10.3.3.13"
+                oct-03-14-compute:
+                  ipmi_host: "10.3.3.14"
+                oct-03-15-compute:
+                  ipmi_host: "10.3.3.15"
+                oct-03-16-compute:
+                  ipmi_host: "10.3.3.16"
+                oct-03-17-compute:
+                  ipmi_host: "10.3.3.17"
+                # oct-03-18-compute:
+                #   ipmi_host: "10.3.3.18"
+                oct-03-19-compute:
+                  ipmi_host: "10.3.3.19"
+                oct-03-20-compute:
+                  ipmi_host: "10.3.3.20"
+                oct-03-21-compute:
+                  ipmi_host: "10.3.3.21"
+                oct-03-22-compute:
+                  ipmi_host: "10.3.3.22"
+                oct-03-23-compute:
+                  ipmi_host: "10.3.3.23"
+                oct-03-24-compute:
+                  ipmi_host: "10.3.3.24"
+                oct-03-25-compute:
+                  ipmi_host: "10.3.3.25"
+                oct-03-26-compute:
+                  ipmi_host: "10.3.3.26"
+                oct-03-27-compute:
+                  ipmi_host: "10.3.3.27"
+                oct-03-28-compute:
+                  ipmi_host: "10.3.3.28"
+                oct-03-29-compute:
+                  ipmi_host: "10.3.3.29"
+                # oct-03-30-compute:
+                #   ipmi_host: "10.3.3.30"
+                oct-03-31-compute:
+                  ipmi_host: "10.3.3.31"

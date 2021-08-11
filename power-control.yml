@@ -1,0 +1,17 @@
+- hosts: ipmi_hosts
+  gather_facts: false
+  vars:
+    power_action: status
+  tasks:
+    - delegate_to: ipmi_proxy
+      command: >-
+        ipmitool
+        -I lanplus
+        -H {{ ipmi_host }}
+        -U {{ ipmi_user }}
+        -P {{ ipmi_password }}
+        power {{ power_action }}
+      register: power
+
+    - debug:
+        var: power.stdout

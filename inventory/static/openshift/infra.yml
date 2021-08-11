@@ -1,0 +1,19 @@
+all:
+  children:
+    infra_cluster:
+      children:
+        infra_openshift:
+          vars:
+            ansible_user: core
+            ansible_python_interpreter: /usr/libexec/platform-python
+          children:
+            infra_controller:
+              vars:
+                moc_role: openshift_controller
+              hosts:
+                os-ctrl-0.moc-infra.massopen.cloud:
+                  ipmi_host: "10.0.15.2"
+                os-ctrl-1.moc-infra.massopen.cloud:
+                  ipmi_host: "10.0.17.36"
+                os-ctrl-2.moc-infra.massopen.cloud:
+                  ipmi_host: "10.0.3.6"

@@ -3,7 +3,8 @@
   vars:
     idrac_account_index: 2
     idrac_key_index: 1
-    idrac_ssh_key_pub: "{{ lookup('file', 'id_rsa.pub') }}"
+    idrac_ssh_key_file: id_rsa.pub
+    idrac_ssh_key: "{{ lookup('file', idrac_ssh_key_filename) }}"
   tasks:
     - name: delete existing ssh key
       delegate_to: "{{ ipmi_host }}"
@@ -19,7 +20,7 @@
         racadm sshpkauth
         -i {{ idrac_account_index }}
         -k {{ idrac_key_index }}
-        -t "{{ idrac_ssh_key_pub }}"
+        -t "{{ idrac_ssh_key }}"
       register: res
       failed_when: >-
         "operation completed successfully" not in res.stdout

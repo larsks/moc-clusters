@@ -1,0 +1,28 @@
+- hosts: ipmi_hosts
+  gather_facts: false
+  vars:
+    idrac_account_index: 2
+    idrac_key_index: 1
+    idrac_ssh_key_pub: "{{ lookup('file', 'id_rsa.pub') }}"
+  tasks:
+    - name: delete existing ssh key
+      delegate_to: "{{ ipmi_host }}"
+      raw: >-
+        racadm sshpkauth
+        -i {{ idrac_account_index }}
+        -k {{ idrac_key_index }}
+        -d
+
+    - name: install ssh key
+      delegate_to: "{{ ipmi_host }}"
+      raw: >-
+        racadm sshpkauth
+        -i {{ idrac_account_index }}
+        -k {{ idrac_key_index }}
+        -t "{{ idrac_ssh_key_pub }}"
+      register: res
+      failed_when: >-
+        "operation completed successfully" not in res.stdout
+
+    - debug:
+        var: res.stdout_lines

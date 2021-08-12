@@ -1,0 +1,42 @@
+- hosts: ipmi_hosts
+  gather_facts: false
+  vars:
+    image_name: discovery_image_smaug.iso
+  tasks:
+    - name: ensure system is powered off
+      tags: [power]
+      delegate_to: "{{ ipmi_host }}"
+      raw: racadm serveraction powerdown
+      register: res
+      failed_when: >-
+        "error" in res.stdout.lower()
+
+    - name: disconnect virtual media
+      tags: [media, media.disconnect]
+      delegate_to: "{{ ipmi_host }}"
+      raw: racadm remoteimage -d
+      register: res
+      failed_when: >-
+        "error" in res.stdout.lower()
+
+    - name: connect virtual media
+      tags: [media, media.connect]
+      delegate_to: "{{ ipmi_host }}"
+      raw: racadm remoteimage -c -u guest -p guest -l http://10.0.0.1/{{ image_name }}
+      register: res
+      failed_when: >-
+        "Remote Image is now Configured" not in res.stdout
+
+    - name: configure bootonce
+      delegate_to: "{{ ipmi_host }}"
+      raw: racadm set iDRAC.VirtualMedia.BootOnce 1
+      register: res
+      failed_when: >-
+        "error" in res.stdout.lower()
+
+    - name: configure boot device
+      delegate_to: "{{ ipmi_host }}"
+      raw: racadm set iDRAC.ServerBoot.FirstBootDevice VCD-DVD
+      register: res
+      failed_when: >-
+        "error" in res.stdout.lower()

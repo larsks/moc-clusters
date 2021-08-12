@@ -1,0 +1,13 @@
+- hosts: ipmi_hosts
+  gather_facts: false
+  tasks:
+    - name: get virtual media status
+      tags: [media, media.disconnect]
+      delegate_to: "{{ ipmi_host }}"
+      raw: racadm remoteimage -s
+      register: res
+      failed_when: >-
+        "error" in res.stdout.lower()
+
+    - debug:
+        var: res.stdout_lines

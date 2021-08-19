@@ -1,7 +1,5 @@
 - hosts: ipmi_hosts
   gather_facts: false
-  vars:
-    image_name: discovery_image_smaug.iso
   tasks:
     - name: ensure system is powered off
       tags: [power]
@@ -10,6 +8,16 @@
       register: res
       failed_when: >-
         "error" in res.stdout.lower()
+
+    - name: wait for system to power off
+      tags: [power]
+      delegate_to: "{{ ipmi_host }}"
+      raw: racadm serveraction powerstatus
+      register: res
+      until: >-
+        "power status: OFF" in res.stdout
+      retries: 10
+      delay: 5
 
     - name: disconnect virtual media
       tags: [media, media.disconnect]
@@ -22,7 +30,7 @@
     - name: connect virtual media
       tags: [media, media.connect]
       delegate_to: "{{ ipmi_host }}"
-      raw: racadm remoteimage -c -u guest -p guest -l http://10.0.0.1/{{ image_name }}
+      raw: racadm remoteimage -c -u guest -p guest -l //10.0.0.1/media/{{ openshift_discovery_image_name }}
       register: res
       failed_when: >-
         "Remote Image is now Configured" not in res.stdout

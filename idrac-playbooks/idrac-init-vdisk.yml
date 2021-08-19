@@ -1,0 +1,29 @@
+- hosts: ipmi_hosts
+  gather_facts: false
+  tasks:
+    - name: get list of virtual disks
+      delegate_to: "{{ ipmi_host }}"
+      raw: racadm storage get vdisks
+      register: disks
+      failed_when: >-
+        "error" in disks.stdout.lower()
+
+    - name: initilize virtual disks
+      tags: [init]
+      delegate_to: "{{ ipmi_host }}"
+      raw: racadm storage init:{{ item }} -speed fast
+      register: res
+      failed_when: >-
+        "error" in res.stdout.lower()
+      loop: "{{ disks.stdout_lines }}"
+
+    - name: schedule init job
+      delegate_to: "{{ ipmi_host }}"
+      raw: racadm jobqueue create {{ item.split(':')[-1] }} -r none
+      register: res
+      failed_when: >-
+        "error" in res.stdout.lower()
+      loop: "{{ disks.stdout_lines }}"
+
+    - debug:
+        var: res.results

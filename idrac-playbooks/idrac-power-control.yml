@@ -1,17 +1,14 @@
 - hosts: ipmi_hosts
   gather_facts: false
   vars:
-    power_action: status
+    power_action: powerstatus
   tasks:
-    - delegate_to: ipmi_proxy
-      command: >-
-        ipmitool
-        -I lanplus
-        -H {{ ipmi_host }}
-        -U {{ ipmi_username }}
-        -P {{ ipmi_password }}
-        power {{ power_action }}
-      register: power
+    - delegate_to: "{{ ipmi_host }}"
+      raw: >-
+        racadm serveraction {{ power_action }}
+      register: res
+      failed_when: >-
+        "error" in res.stdout.lower()
 
     - debug:
-        var: power.stdout
+        var: res.stdout

@@ -3,6 +3,7 @@ all:
     smaug_cluster:
       vars:
         aws_secret_prefix: cluster/smaug
+        openshift_discovery_image_name: discovery_image_smaug.iso
       children:
         smaug_openshift:
           vars:

@@ -60,8 +60,8 @@ all:
                   ipmi_host: "10.3.3.16"
                 oct-03-17-compute:
                   ipmi_host: "10.3.3.17"
-                # oct-03-18-compute:
-                #   ipmi_host: "10.3.3.18"
+                oct-03-18-compute:
+                  ipmi_host: "10.3.3.18"
                 oct-03-19-compute:
                   ipmi_host: "10.3.3.19"
                 oct-03-20-compute:

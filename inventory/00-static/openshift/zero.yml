@@ -19,6 +19,7 @@ all:
           vars:
             ansible_python_interpreter: /usr/libexec/platform-python
             ansible_user: core
+            ansible_host: "{{ baremetal_ip|ipaddr('address') }}"
           children:
             zero_controller:
               vars:

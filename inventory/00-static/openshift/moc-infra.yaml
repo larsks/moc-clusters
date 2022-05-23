@@ -1,15 +1,15 @@
 all:
   children:
-    infra_cluster:
+    moc_infra_cluster:
       vars:
         aws_secret_prefix: cluster/infra
       children:
-        infra_openshift:
+        moc_infra_openshift:
           vars:
             ansible_user: core
             ansible_python_interpreter: /usr/libexec/platform-python
           children:
-            infra_controller:
+            moc_infra_controller:
               vars:
                 moc_role: openshift_controller
               hosts:

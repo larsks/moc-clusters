@@ -6,7 +6,7 @@ all:
           vars:
             ansible_python_interpreter: /usr/libexec/platform-python
             ansible_user: core
-            ansible_host: "{{ baremetal_ip|ipaddr('address') }}"
+            ansible_host: "{{ baremetal_ip|default('127.0.0.1')|ipaddr('address') }}"
           children:
             ocp_prod_controller:
               vars:
@@ -28,33 +28,74 @@ all:
             ocp_prod_compute:
               vars:
                 moc_role: openshift_compute
-                aws_secret_prefix: cluster/moc/ocp-prod
-              hosts:
-                neu-15-4-compute.ocp-prod.massopen.cloud:
-                  hil_node: neu-15-4
-                  baremetal_ip: 128.52.62.179
-                  ipmi_host: 10.0.15.4
-                neu-15-9-compute.ocp-prod.massopen.cloud:
-                  hil_node: neu-15-9
-                  baremetal_ip: 128.52.62.162
-                  ipmi_host: 10.0.15.9
-                neu-17-12-compute.ocp-prod.massopen.cloud:
-                  hil_node: neu-17-12
-                  baremetal_ip: 128.52.62.175
-                  ipmi_host: 10.0.17.12
-                neu-3-11-compute.ocp-prod.massopen.cloud:
-                  hil_node: neu-3-11
-                  baremetal_ip: 128.52.62.141
-                  ipmi_host: 10.0.3.11
-                neu-5-10-compute.ocp-prod.massopen.cloud:
-                  hil_node: neu-5-10
-                  baremetal_ip: 128.52.62.178
-                  ipmi_host: 10.0.5.10
-                neu-5-3-compute.ocp-prod.massopen.cloud:
-                  hil_node: neu-5-3
-                  baremetal_ip: 128.52.62.177
-                  ipmi_host: 10.0.5.3
-                neu-5-4-compute.ocp-prod.massopen.cloud:
-                  hil_node: neu-5-4
-                  baremetal_ip: 128.52.62.163
-                  ipmi_host: 10.0.5.4
+              children:
+                ocp_prod_compute_umass:
+                  vars:
+                    aws_secret_prefix: cluster/umass/ocp-prod
+                  hosts:
+                    oct5-02-compute.ocp-prod.massopen.cloud:
+                      ipmi_host: 10.3.5.2
+                    oct5-03-compute.ocp-prod.massopen.cloud:
+                      ipmi_host: 10.3.5.3
+                    oct5-04-compute.ocp-prod.massopen.cloud:
+                      ipmi_host: 10.3.5.4
+                    oct5-05-compute.ocp-prod.massopen.cloud:
+                      ipmi_host: 10.3.5.5
+                    oct5-06-compute.ocp-prod.massopen.cloud:
+                      ipmi_host: 10.3.5.6
+                    oct5-07-compute.ocp-prod.massopen.cloud:
+                      ipmi_host: 10.3.5.7
+                    oct5-09-compute.ocp-prod.massopen.cloud:
+                      ipmi_host: 10.3.5.9
+                    oct5-11-compute.ocp-prod.massopen.cloud:
+                      ipmi_host: 10.3.5.11
+                    oct5-12-compute.ocp-prod.massopen.cloud:
+                      ipmi_host: 10.3.5.12
+                    oct5-13-compute.ocp-prod.massopen.cloud:
+                      ipmi_host: 10.3.5.13
+                    oct5-14-compute.ocp-prod.massopen.cloud:
+                      ipmi_host: 10.3.5.14
+                    oct5-15-compute.ocp-prod.massopen.cloud:
+                      ipmi_host: 10.3.5.15
+                    oct5-16-compute.ocp-prod.massopen.cloud:
+                      ipmi_host: 10.3.5.16
+                    oct5-17-compute.ocp-prod.massopen.cloud:
+                      ipmi_host: 10.3.5.17
+                    oct5-18-compute.ocp-prod.massopen.cloud:
+                      ipmi_host: 10.3.5.18
+                    oct5-19-compute.ocp-prod.massopen.cloud:
+                      ipmi_host: 10.3.5.19
+                    oct5-20-compute.ocp-prod.massopen.cloud:
+                      ipmi_host: 10.3.5.20
+                ocp_prod_compute_neu:
+                  vars:
+                    aws_secret_prefix: cluster/moc/ocp-prod
+                  hosts:
+                    neu-15-4-compute.ocp-prod.massopen.cloud:
+                      hil_node: neu-15-4
+                      baremetal_ip: 128.52.62.179
+                      ipmi_host: 10.0.15.4
+                    neu-15-9-compute.ocp-prod.massopen.cloud:
+                      hil_node: neu-15-9
+                      baremetal_ip: 128.52.62.162
+                      ipmi_host: 10.0.15.9
+                    neu-17-12-compute.ocp-prod.massopen.cloud:
+                      hil_node: neu-17-12
+                      baremetal_ip: 128.52.62.175
+                      ipmi_host: 10.0.17.12
+                    neu-3-11-compute.ocp-prod.massopen.cloud:
+                      hil_node: neu-3-11
+                      baremetal_ip: 128.52.62.141
+                      ipmi_host: 10.0.3.11
+                    neu-5-10-compute.ocp-prod.massopen.cloud:
+                      hil_node: neu-5-10
+                      baremetal_ip: 128.52.62.178
+                      ipmi_host: 10.0.5.10
+                    neu-5-3-compute.ocp-prod.massopen.cloud:
+                      hil_node: neu-5-3
+                      baremetal_ip: 128.52.62.177
+                      ipmi_host: 10.0.5.3
+                    neu-5-4-compute.ocp-prod.massopen.cloud:
+                      hil_node: neu-5-4
+                      baremetal_ip: 128.52.62.163
+                      ipmi_host: 10.0.5.4

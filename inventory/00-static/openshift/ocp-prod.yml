@@ -1,8 +1,6 @@
 all:
   children:
     ocp_prod_cluster:
-      vars:
-        aws_secret_prefix: cluster/ocp-prod
       children:
         ocp_prod_openshift:
           vars:
@@ -13,6 +11,7 @@ all:
             ocp_prod_controller:
               vars:
                 moc_role: openshift_controller
+                aws_secret_prefix: cluster/umass/ocp-prod
               hosts:
                 oct10-01-control.ocp-prod.massopen.cloud:
                   hil_node: oct-10-01
@@ -29,6 +28,7 @@ all:
             ocp_prod_compute:
               vars:
                 moc_role: openshift_compute
+                aws_secret_prefix: cluster/moc/ocp-prod
               hosts:
                 neu-15-4-compute.ocp-prod.massopen.cloud:
                   hil_node: neu-15-4
